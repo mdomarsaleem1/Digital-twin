@@ -48,6 +48,10 @@ temp/
 # Docker
 .docker/
 
+# Data and credentials
+data/
+credentials/
+
 # Secrets
 secrets/
 *.pem
