@@ -1,0 +1,128 @@
+# Orchestration Configuration for Agentic Council System
+# Defines debate phases, timing, and consensus rules
+
+debate:
+  total_time_seconds: 900  # 15 minutes hard stop
+
+  phases:
+    parallel_assessment:
+      name: "Parallel Assessment"
+      duration_seconds: 300  # 5 minutes
+      description: "All agents analyze independently"
+      rules:
+        - No inter-agent communication
+        - Each agent produces independent score (1-10)
+        - Key insights and red flags identified
+        - Confidence level stated
+
+    structured_debate:
+      name: "Structured Debate"
+      duration_seconds: 420  # 7 minutes
+      description: "Orchestrator-moderated discussion"
+      rules:
+        - Orchestrator identifies top 3 disagreements
+        - Sequential discussion of contentious points
+        - Agents may update positions with justification
+        - Devil's Advocate challenges emerging consensus
+        - Each agent gets max 2 rebuttals
+
+    consensus_building:
+      name: "Consensus Building"
+      duration_seconds: 180  # 3 minutes
+      description: "Final synthesis and recommendation"
+      rules:
+        - Weighted voting with confidence intervals
+        - Orchestrator synthesizes final recommendation
+        - Risk appetite options presented
+        - Dissenting opinions captured
+
+consensus:
+  voting:
+    method: "weighted"
+    minimum_confidence: 0.6
+    majority_threshold: 0.67  # 67% weighted agreement
+
+  recommendations:
+    - name: "STRONG GO"
+      threshold: 0.85
+      description: "Proceed with high confidence"
+    - name: "GO"
+      threshold: 0.70
+      description: "Proceed with normal caution"
+    - name: "CONDITIONAL GO"
+      threshold: 0.55
+      description: "Proceed only if specific conditions met"
+    - name: "NO-GO"
+      threshold: 0.40
+      description: "Do not proceed"
+    - name: "STRONG NO-GO"
+      threshold: 0.0
+      description: "Significant concerns - avoid"
+
+  risk_appetites:
+    conservative:
+      weight_multiplier: 0.8
+      risk_tolerance: "low"
+      description: "Emphasize risks, require higher confidence"
+    moderate:
+      weight_multiplier: 1.0
+      risk_tolerance: "medium"
+      description: "Balanced risk-reward assessment"
+    aggressive:
+      weight_multiplier: 1.2
+      risk_tolerance: "high"
+      description: "Emphasize opportunities, accept more risk"
+
+output:
+  formats:
+    - executive_summary
+    - detailed_swot
+    - financial_model
+    - execution_roadmap
+    - risk_register
+
+  sections:
+    executive_summary:
+      max_length: 500
+      required_fields:
+        - recommendation
+        - confidence_score
+        - key_drivers
+        - major_risks
+        - next_steps
+
+    detailed_swot:
+      quadrants:
+        - strengths
+        - weaknesses
+        - opportunities
+        - threats
+      agent_contributions: true
+
+    financial_model:
+      scenarios:
+        - best_case
+        - base_case
+        - worst_case
+      metrics:
+        - tam_sam_som
+        - cac_ltv
+        - burn_rate
+        - runway
+        - break_even
+
+    execution_roadmap:
+      phases:
+        - mvp_3mo
+        - growth_6mo
+        - scale_12mo
+      include_dependencies: true
+
+    risk_register:
+      categories:
+        - technical
+        - market
+        - financial
+        - operational
+        - regulatory
+      include_mitigations: true
