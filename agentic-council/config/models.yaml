@@ -1,0 +1,44 @@
+# Model Configuration for Agentic Council System
+# Defines LLM endpoints and parameters for each role
+
+orchestrator:
+  provider: anthropic
+  model: claude-opus-4-5-20251101
+  max_tokens: 4096
+  temperature: 0.7
+  description: "Primary consensus builder and moderator"
+
+specialists:
+  provider: google
+  model: gemini-2.0-flash-exp
+  max_tokens: 2048
+  temperature: 0.6
+  description: "Cost-effective specialist agents"
+
+devils_advocate:
+  provider: google
+  model: gemini-1.5-pro
+  max_tokens: 3072
+  temperature: 0.8
+  description: "Elevated capability for challenging consensus"
+
+# Rate limiting and cost controls
+rate_limits:
+  orchestrator:
+    requests_per_minute: 20
+    tokens_per_minute: 100000
+  specialists:
+    requests_per_minute: 60
+    tokens_per_minute: 200000
+  devils_advocate:
+    requests_per_minute: 30
+    tokens_per_minute: 150000
+
+# Fallback configuration
+fallbacks:
+  orchestrator:
+    - claude-sonnet-4-20250514
+  specialists:
+    - gemini-1.5-flash
+  devils_advocate:
+    - gemini-2.0-flash-exp

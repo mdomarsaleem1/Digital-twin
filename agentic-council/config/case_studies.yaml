@@ -1,0 +1,76 @@
+# Case Study Data Sources Configuration
+# Defines sources for web scraping and RAG system
+
+scraping:
+  enabled: true
+  schedule: "0 6 * * 0"  # Weekly on Sunday at 6 AM UTC
+
+  sources:
+    cb_insights:
+      name: "CB Insights"
+      url: "https://www.cbinsights.com/research/startup-failure-post-mortem/"
+      type: "failure_analysis"
+      selector: ".research-post"
+      enabled: true
+
+    hbr_cases:
+      name: "Harvard Business Review"
+      url: "https://hbr.org/topic/case-studies"
+      type: "case_study"
+      requires_subscription: true
+      enabled: false
+
+    techcrunch:
+      name: "TechCrunch"
+      url: "https://techcrunch.com/tag/startups/"
+      type: "news"
+      selector: ".post-block"
+      enabled: true
+
+    product_hunt:
+      name: "Product Hunt"
+      url: "https://www.producthunt.com"
+      type: "launches"
+      api_enabled: true
+      enabled: true
+
+rag:
+  vector_db: "chromadb"
+  embedding_model: "text-embedding-3-small"
+  chunk_size: 1000
+  chunk_overlap: 200
+
+  collections:
+    case_studies:
+      description: "Business case studies and post-mortems"
+      metadata_fields:
+        - company
+        - year
+        - industry
+        - outcome
+        - funding_amount
+        - key_factors
+
+    news_articles:
+      description: "Recent startup news and analysis"
+      retention_days: 90
+
+categories:
+  - success
+  - failure
+  - mixed
+  - pivot
+  - acquisition
+
+industries:
+  - technology
+  - healthcare
+  - finance
+  - e_commerce
+  - education
+  - entertainment
+  - food_delivery
+  - transportation
+  - real_estate
+  - enterprise_software
+  - consumer_apps
